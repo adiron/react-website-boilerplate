@@ -14,7 +14,8 @@ var devConfig = {
     filename: "bundle.js"
   },
   module: {
-    loaders: [
+    rules: [
+      { test: /\.jsx?$/, loader: 'eslint-loader', enforce: 'pre', exclude: /node_modules/ },
       {
         test: /\.jsx?$/,
         loader: "babel-loader",
@@ -54,9 +55,10 @@ if (isProd) {
   var stripLoader = {
     test: [/\.js$/, /\.es6$/],
     exclude: /node_modules/,
-    loader: WebpackStripLoader.loader('console.log')
+    loader: WebpackStripLoader.loader('console.log'),
+    enforce: 'post'
   }
-  devConfig.module.loaders.push(stripLoader);
+  devConfig.module.rules.push(stripLoader);
 
   devConfig.plugins.push(new webpack.optimize.UglifyJsPlugin());
   devConfig.plugins.push(new webpack.optimize.AggressiveMergingPlugin());

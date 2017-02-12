@@ -1,0 +1,23 @@
+{
+    "plugins": [
+      "react"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "semi": "error",
+        "no-unused-vars": "warn",
+        "no-duplicate-imports": "error",
+        "react/jsx-uses-vars": "warn",
+        "no-useless-constructor": "warn",
+        "prefer-const": "warn",
+        "jsx-quotes": ["warn", "prefer-single"],
+        "react/jsx-key": ["warn"],
+        "react/jsx-uses-react": ["warn"]
+    }
+}
