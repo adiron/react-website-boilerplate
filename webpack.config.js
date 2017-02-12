@@ -3,6 +3,9 @@ var webpack = require("webpack");
 var isProd = process.env.NODE_ENV = "production";
 
 var devConfig = {
+  devServer: {
+    historyApiFallback: true
+  },
   context: __dirname + "/src",
   entry: "./index.js",
   plugins: [new CopyWebpackPlugin([ { from: "*.html" } ])],
