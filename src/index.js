@@ -16,4 +16,4 @@ $(function() {
         <IndexRoute component={Main} />
       </Route>
     </Router>), document.getElementById('root'));
-})
+});
