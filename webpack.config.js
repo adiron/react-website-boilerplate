@@ -8,15 +8,23 @@ var devConfig = {
   },
   context: __dirname + "/src",
   entry: "./index.js",
-  plugins: [new CopyWebpackPlugin([ { from: "*.html" } ])],
+  plugins: [new CopyWebpackPlugin([
+      {
+        from: "*.html"
+      }
+    ])],
   output: {
     path: __dirname + "/dist",
     filename: "bundle.js"
   },
   module: {
     rules: [
-      { test: /\.jsx?$/, loader: 'eslint-loader', enforce: 'pre', exclude: /node_modules/ },
       {
+        test: /\.jsx?$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        exclude: /node_modules/
+      }, {
         test: /\.jsx?$/,
         loader: "babel-loader",
         query: {
@@ -41,7 +49,32 @@ var devConfig = {
         loader: "file-loader"
       }, {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: ['file-loader?hash=sha512&digest=hex&name=[hash].[ext]', 'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false']
+        loaders: [
+          {
+            'loader': 'file-loader',
+            query: {
+              hash: 'sha512',
+              digest: 'hex',
+              name: '[hash].[ext]'
+            }
+          }, {
+            'loader': 'image-webpack-loader',
+            'query': {
+              optipng: {
+                optimizationLevel: 7,
+              },
+              gifsicle: {
+                interlaced: false
+              },
+              mozjpeg: {
+                progressive: true
+              },
+              pngquant: {
+                quality: '90-100'
+              }
+            }
+          }
+        ]
       }
     ]
   }
@@ -53,7 +86,9 @@ if (isProd) {
 
   var WebpackStripLoader = require('strip-loader');
   var stripLoader = {
-    test: [/\.js$/, /\.es6$/],
+    test: [
+      /\.js$/, /\.es6$/
+    ],
     exclude: /node_modules/,
     loader: WebpackStripLoader.loader('console.log'),
     enforce: 'post'
@@ -62,7 +97,10 @@ if (isProd) {
 
   devConfig.plugins.push(new webpack.optimize.UglifyJsPlugin());
   devConfig.plugins.push(new webpack.optimize.AggressiveMergingPlugin());
+  devConfig.devtool = '#source-map';
 
+} else {
+  devConfig.devtool = '#eval';
 }
 
 module.exports = devConfig;
