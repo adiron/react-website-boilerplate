@@ -1,6 +1,6 @@
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var webpack = require("webpack");
-var isProd = process.env.NODE_ENV = "production";
+var isProd = process.env.NODE_ENV == "production";
 
 var devConfig = {
   devServer: {
